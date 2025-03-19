@@ -17,37 +17,67 @@ class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationGroup = 'Employee Managment';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('country_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('state_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('city_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('department_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('first_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('zip_code')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('date_of_birth')
-                    ->required(),
-                Forms\Components\DatePicker::make('date_hired')
-                    ->required(),
+                #--------------------------------------------Relationships
+                Forms\Components\Section::make('Relationships')
+                    ->schema([
+                        Forms\Components\Select::make('country_id')
+                            ->relationship(name: 'country', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Forms\Components\Select::make('city_id')
+                            ->relationship(name: 'city', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Forms\Components\Select::make('state_id')
+                            ->relationship(name: 'state', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Forms\Components\Select::make('department_id')
+                            ->relationship(name: 'department', titleAttribute: 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                    ])->columns(2),
+                #--------------------------------------------User Name
+                Forms\Components\Section::make('User Name')
+                    ->description('Put the user name details in.')
+                    ->schema([
+                        Forms\Components\TextInput::make('first_name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('last_name')
+                            ->required()
+                            ->maxLength(255),
+                    ])->columns(2),
+                #--------------------------------------------User Address
+                Forms\Components\Section::make('User Address')
+                    ->schema([
+                        Forms\Components\TextInput::make('address')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('zip_code')
+                            ->required()
+                            ->maxLength(255),
+                    ])->columns(2),
+
+                #--------------------------------------------Dates
+                Forms\Components\Section::make('Dates')
+                    ->schema([
+                        Forms\Components\DatePicker::make('date_of_birth')
+                            ->required(),
+                        Forms\Components\DatePicker::make('date_hired')
+                            ->required(),
+                    ])->columns(2),
             ]);
     }
 

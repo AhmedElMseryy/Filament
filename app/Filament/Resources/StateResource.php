@@ -17,7 +17,7 @@ class StateResource extends Resource
 {
     protected static ?string $model = State::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office-2';
     protected static ?string $navigationLabel = 'State';
     protected static ?string $modelLabel = 'States';
     protected static ?string $navigationGroup = 'System Managment';
@@ -27,9 +27,16 @@ class StateResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('country_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        "active" => 'Active',
+                        "inactive" => 'Inactive',
+                    ])
+                    ->relationship(name: 'country', titleAttribute: 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -40,9 +47,10 @@ class StateResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('country_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('#')
+                    ->label('#')
+                    ->rowIndex(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
