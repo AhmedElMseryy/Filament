@@ -18,9 +18,20 @@ class CountryResource extends Resource
     protected static ?string $model = Country::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-flag';
-    protected static ?string $navigationLabel = 'Country';
-    protected static ?string $modelLabel = 'Employees Country';
-    protected static ?string $navigationGroup = 'System Managment';
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('keys.countries');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('keys.country');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('keys.system_management');
+    }
     protected static ?int $navigationSort = 1;
 
 
@@ -44,7 +55,11 @@ class CountryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('#')
+                    ->label('#')
+                    ->rowIndex(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
             ])
             ->filters([
                 //

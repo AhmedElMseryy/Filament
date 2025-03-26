@@ -18,9 +18,19 @@ class DepartmentResource extends Resource
     protected static ?string $model = Department::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
-    protected static ?string $navigationLabel = 'Department';
-    protected static ?string $modelLabel = 'Department';
-    protected static ?string $navigationGroup = 'System Managment';
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('keys.departments');
+    }
+    public static function getModelLabel(): string
+    {
+        return __('keys.department');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('keys.system_management');
+    }
     protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
@@ -37,6 +47,9 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('#')
+                    ->label('#')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

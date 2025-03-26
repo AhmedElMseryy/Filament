@@ -1,11 +1,13 @@
 <?php
 
+use App\Traits\MigrationTrait;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    use MigrationTrait;
     /**
      * Run the migrations.
      */
@@ -14,9 +16,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
+            $table->string('phone')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string("code")->nullable();
+            $table->string("expire_code")->nullable();
             $table->string('password');
+            $table->integer('role')->default("2")->comment("1=Admin, 2=user, 3=employee");
+            $this->addGeneralFields($table);
             $table->rememberToken();
             $table->timestamps();
         });

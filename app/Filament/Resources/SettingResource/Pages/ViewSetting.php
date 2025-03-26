@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\EmployeeResource\Pages;
+namespace App\Filament\Resources\SettingResource\Pages;
 
-use App\Filament\Resources\EmployeeResource;
+use App\Filament\Resources\SettingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewEmployee extends ViewRecord
+class ViewSetting extends ViewRecord
 {
-    protected static string $resource = EmployeeResource::class;
+    protected static string $resource = SettingResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -18,9 +18,22 @@ class CityResource extends Resource
     protected static ?string $model = City::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-map';
-    protected static ?string $navigationLabel = 'City';
-    protected static ?string $modelLabel = 'City';
-    protected static ?string $navigationGroup = 'System Managment';
+
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('keys.cities');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('keys.city');
+    }
+    public static function getNavigationGroup(): ?string
+    {
+        return __('keys.system_management');
+    }
+
     protected static ?int $navigationSort = 2;
 
 
@@ -44,9 +57,9 @@ class CityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('state_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('#')
+                    ->label('#')
+                    ->rowIndex(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

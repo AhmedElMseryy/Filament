@@ -2,82 +2,78 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EmployeeResource\Pages;
-use App\Filament\Resources\EmployeeResource\RelationManagers;
-use App\Models\Employee;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use App\Models\Employee;
+use Filament\Forms\Form;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Table;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Permission\Models\Role;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use App\Filament\Resources\EmployeeResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\EmployeeResource\RelationManagers;
 
 class EmployeeResource extends Resource
 {
-    protected static ?string $model = Employee::class;
-
+    protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
-    protected static ?string $navigationGroup = 'Employee Managment';
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('keys.employees');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('keys.employee');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('keys.user_management');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                #--------------------------------------------Relationships
-                Forms\Components\Section::make('Relationships')
-                    ->schema([
-                        Forms\Components\Select::make('country_id')
-                            ->relationship(name: 'country', titleAttribute: 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        Forms\Components\Select::make('city_id')
-                            ->relationship(name: 'city', titleAttribute: 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        Forms\Components\Select::make('state_id')
-                            ->relationship(name: 'state', titleAttribute: 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                        Forms\Components\Select::make('department_id')
-                            ->relationship(name: 'department', titleAttribute: 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required(),
-                    ])->columns(2),
-                #--------------------------------------------User Name
-                Forms\Components\Section::make('User Name')
-                    ->description('Put the user name details in.')
-                    ->schema([
-                        Forms\Components\TextInput::make('first_name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('last_name')
-                            ->required()
-                            ->maxLength(255),
-                    ])->columns(2),
-                #--------------------------------------------User Address
-                Forms\Components\Section::make('User Address')
-                    ->schema([
-                        Forms\Components\TextInput::make('address')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('zip_code')
-                            ->required()
-                            ->maxLength(255),
-                    ])->columns(2),
+                TextInput::make('name')
+                    ->label(__('keys.name'))
+                    ->required(),
 
-                #--------------------------------------------Dates
-                Forms\Components\Section::make('Dates')
-                    ->schema([
-                        Forms\Components\DatePicker::make('date_of_birth')
-                            ->required(),
-                        Forms\Components\DatePicker::make('date_hired')
-                            ->required(),
-                    ])->columns(2),
+                TextInput::make('email')
+                    ->label(__('keys.email'))
+                    ->email()
+                    ->unique('users', 'email')
+                    ->required(),
+
+                TextInput::make('phone')
+                    ->label(__('keys.phone'))
+                    ->tel(),
+
+                TextInput::make('password')
+                    ->label(__('keys.password'))
+                    ->password()
+                    ->visibleOn('create')
+                    ->required(),
+
+
+                Select::make('role_id')
+                    ->label(__('keys.role'))
+                    ->options(Role::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+
+                Toggle::make('is_active')
+                    ->label(__('keys.active'))
+                    ->required(),
             ]);
     }
 
@@ -85,45 +81,19 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('country_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('state_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('city_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('department_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('first_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('last_name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('zip_code')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('date_of_birth')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('date_hired')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('name')->label(__('keys.name'))->sortable()->searchable(),
+                TextColumn::make('email')->label(__('keys.email'))->sortable()->searchable(),
+                TextColumn::make('phone')->label(__('keys.phone'))->sortable()->searchable(),
+                TextColumn::make('roles.name')->label(__('keys.role'))->badge(),
+                ToggleColumn::make('is_active')->label(__('keys.active')),
+                TextColumn::make('created_at')->label(__('keys.created_at'))->date('Y M d'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -144,7 +114,6 @@ class EmployeeResource extends Resource
         return [
             'index' => Pages\ListEmployees::route('/'),
             'create' => Pages\CreateEmployee::route('/create'),
-            'view' => Pages\ViewEmployee::route('/{record}'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
     }

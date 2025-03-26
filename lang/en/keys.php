@@ -1,0 +1,72 @@
+<?php
+
+return [
+    'employee' => 'Employee',
+    'employees' => 'Employees',
+    'users' => 'Users',
+    'user' => 'User',
+
+    'name' => 'Name',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'password' => 'Password',
+    'role' => 'Role',
+    'roles' => 'Roles',
+    'role_name' => 'Role Name',
+    'permissions' => 'Permissions',
+    'created_at' => 'Created At',
+
+    'active' => 'active',
+
+    'first_name' => 'First Name',
+    'last_name' => 'Last Name',
+    'zip_code' => 'Zip code',
+    'date_of_birth' => 'Date of birth',
+    'date_hired' => 'Date hired',
+    'employee_management' => 'Employee Management',
+    'user_management' => 'User Management',
+    'system_management' => 'System Management',
+
+    //------------------------------HEROSECTIONS
+    'hero_sections' => 'Hero Sections',
+    'hero_section' => 'Hero Section',
+    'sub_description_en' => 'Sub Description (EN)',
+    'sub_description_ar' => 'Sub Description (AR)',
+    'content_management' => 'Content Management',
+    'image' => 'Image',
+
+    //------------------------------SETTINGS
+    'settings' => 'Settings',
+    'setting' => 'Setting',
+    'name_en' => 'Name (EN)',
+    'name_ar' => 'Name (AR)',
+    'description_en' => 'Description (EN)',
+    'description_ar' => 'Description (AR)',
+    'notes_and_suggestions_en' => 'Notes & suggestions (EN)',
+    'notes_and_suggestions_ar' => 'Notes & suggestions (AR)',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'phone2' => 'Phone2',
+    'support_phone' => 'Support Phone',
+    'location' => 'Location',
+    'facebook' => 'Facebook',
+    'twitter' => 'Twitter',
+    'instagram' => 'Instagram',
+    'whatsapp' => 'Whatsapp',
+    'youtube' => 'Youtube',
+    'tiktok' => 'Tiktok',
+    'logo' => 'Logo',
+    'logo2' => 'Logo2',
+    'footer_image' => 'Footer Image',
+    'favicon' => 'Favicon',
+
+
+    'country' => 'Country',
+    'countries' => 'Countries',
+    'city' => 'City',
+    'cities' => 'Cities',
+    'state' => 'State',
+    'states' => 'States',
+    'department' => 'Department',
+    'departments' => 'Departments',
+];
