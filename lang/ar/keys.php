@@ -17,6 +17,7 @@ return [
     'created_at' => 'تاريخ الإنشاء',
 
     'active' => 'مفعل',
+    'inactive' => 'غير مفعل',
 
     'first_name' => 'الاسم الأول',
     'last_name' => 'الاسم الأخير',
@@ -33,7 +34,17 @@ return [
     'sub_description_en' => 'الوصف الفرعى (الانجليزيه)',
     'sub_description_ar' => 'الوصف الفرعى (العربيه)',
     'content_management' => 'إدارة المحتوى',
+    'org_structure' => 'الهيكل التنظيمي',
     'image' => 'صوره',
+
+    //------------------------------ABOUT
+    'about' => 'من نحن',
+    'abouts' => 'صفحات من نحن',
+    'meta_title' => 'عنوان الميتا ',
+    'meta_title_en' => 'عنوان الميتا بالانجليزية',
+    'meta_title_ar' => 'عنوان الميتا بالعربية',
+    'meta_description_en' => 'وصف الميتا بالانجليزية',
+    'meta_description_ar' => 'وصف الميتا بالعربية',
 
     //------------------------------SETTINGS
     'settings' => 'الإعدادات',

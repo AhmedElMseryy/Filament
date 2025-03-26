@@ -17,6 +17,7 @@ return [
     'created_at' => 'Created At',
 
     'active' => 'active',
+    'inactive' => 'In active',
 
     'first_name' => 'First Name',
     'last_name' => 'Last Name',
@@ -33,7 +34,17 @@ return [
     'sub_description_en' => 'Sub Description (EN)',
     'sub_description_ar' => 'Sub Description (AR)',
     'content_management' => 'Content Management',
+    'org_structure' => 'Organization Structure',
     'image' => 'Image',
+
+    //------------------------------ABOUT
+    'about' => 'About US',
+    'abouts' => 'About US',
+    'meta_title' => 'Meta Title',
+    'meta_title_en' => 'Meta Title (EN)',
+    'meta_title_ar' => 'Meta Title (AR)',
+    'meta_description_en' => 'Meta Description (EN)',
+    'meta_description_ar' => 'Meta Description (AR)',
 
     //------------------------------SETTINGS
     'settings' => 'Settings',
